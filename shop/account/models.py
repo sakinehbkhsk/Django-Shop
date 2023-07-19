@@ -48,6 +48,16 @@ class Profile(BaseModel):
     image = models.ImageField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self) -> str:
+        return f'{self.first_name} - {self.last_name}'
+
+class Address(BaseModel):
+    address = models.TextField()
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.address
+
 
 
 
