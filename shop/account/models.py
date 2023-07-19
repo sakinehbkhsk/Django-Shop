@@ -59,7 +59,12 @@ class Address(BaseModel):
         return self.address
 
 
-
+class OtpCode(BaseModel):
+    phone_number = models.CharField(max_length=11)
+    code = models.PositiveSmallIntegerField()
+    created = models.DateTimeField(auto_now=True)
+    
+    
 
 
 
