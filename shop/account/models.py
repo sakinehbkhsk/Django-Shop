@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
-
+from core.models import BaseModel
 class UserManager(BaseUserManager):
     def create_user(self, phone_number,password, email=None):
         if not phone_number:
@@ -39,6 +39,14 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+    
+class Profile(BaseModel):
+    GENDER_CHOICE = (('m', 'male'), ('f', 'female'))
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=255)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICE, null=True, blank=True)
+    image = models.ImageField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 
