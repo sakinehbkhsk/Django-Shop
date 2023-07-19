@@ -14,7 +14,12 @@ class Order(BaseModel):
     address = models.ForeignKey(Address, on_delete=models.PROTECT)
     # total_price = 
 
-
+class ProductOrder(BaseModel):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    price = models.PositiveBigIntegerField()
+    
 
 
 
