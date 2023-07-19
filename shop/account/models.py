@@ -26,6 +26,7 @@ class User(AbstractBaseUser):
 
     objects = UserManager()
     USERNAME_FIELD = 'phone_number'
+    REQUIRED_FIELDS = ['email','password']
     
     def __str__(self):
         return self.phone_number
@@ -63,7 +64,7 @@ class OtpCode(BaseModel):
     phone_number = models.CharField(max_length=11)
     code = models.PositiveSmallIntegerField()
     created = models.DateTimeField(auto_now=True)
-    
+
     
 
 
