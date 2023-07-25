@@ -39,7 +39,7 @@ class Order(BaseModel):
 
 
 class ProductOrder(BaseModel):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='productorders')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.PositiveBigIntegerField()

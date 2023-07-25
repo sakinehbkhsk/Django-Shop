@@ -16,7 +16,7 @@ class UserManager(BaseUserManager):
         user.is_admin = True
         user.save(using=self._db)
         return user
-
+# permission
 class User(AbstractBaseUser):
     phone_number = models.CharField(max_length=20, unique=True)
     email =  models.EmailField(max_length=255)
