@@ -11,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class UserRegisterView(View):
     form_class = UserRegistrationForm
-    template_name = 'accounts/register.html'
+    template_name = 'account/register.html'
 
     def get(self, request):
         form = self.form_class
@@ -26,11 +26,11 @@ class UserRegisterView(View):
             request.session['user_registration_info'] = {
                 'phone_number': form.cleaned_data['phone'],
                 'email': form.cleaned_data['email'],
-                'full_name': form.cleaned_data['full_name'],
+                'first_name': form.cleaned_data['first_name'],
                 'password': form.cleaned_data['password'],
             }
             messages.success(request, 'we sent you a code', 'success')
-            return redirect('accounts:verify_code')
+            return redirect('account:verify_code')
         return render(request, self.template_name, {'form': form})
     
 
@@ -39,7 +39,7 @@ class UserRegisterVerifyCodeView(View):
 
     def get(self, request):
         form = self.form_class
-        return render(request, 'accounts/verify.html', {'form': form})
+        return render(request, 'account/verify.html', {'form': form})
 
     def post(self, request):
         user_session = request.session['user_registration_info']
@@ -49,14 +49,14 @@ class UserRegisterVerifyCodeView(View):
             cd = form.cleaned_data
             if cd['code'] == code_instance.code:
                 User.objects.create_user(user_session['phone_number'], user_session['email'],
-                                         user_session['full_name'], user_session['password'])
+                                         user_session['first_name'], user_session['password'])
 
                 code_instance.delete()
                 messages.success(request, 'you registered', 'success')
                 return redirect('home:home')
             else:
                 messages.error(request, 'this code is wrong', 'danger')
-                return redirect('accounts:verify_code')
+                return redirect('account:verify_code')
         return redirect('home:home')
 
 
