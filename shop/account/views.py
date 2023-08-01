@@ -5,6 +5,9 @@ import random
 from utils import send_otp_code
 from .models import OtpCode,User
 from django.contrib import messages
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 class UserRegisterView(View):
     form_class = UserRegistrationForm
@@ -56,4 +59,10 @@ class UserRegisterVerifyCodeView(View):
                 return redirect('accounts:verify_code')
         return redirect('home:home')
 
+
+class UserLogoutView(LoginRequiredMixin, View):
+    def get(self, request):
+        logout(request)
+        messages.success(request, 'you logged out successfully', 'success')
+        return redirect('home:home')
 
