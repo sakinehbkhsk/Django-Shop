@@ -1,5 +1,6 @@
 from django.db import models
 from core.models import BaseModel
+from django.urls import reverse
 
 class Category(BaseModel):
     sub_category = models.ForeignKey('self', on_delete=models.CASCADE, related_name='scategory', null=True, blank=True)
@@ -16,6 +17,10 @@ class Category(BaseModel):
     def __str__(self) -> str:
         return self.name
     
+    def get_absolute_url(self):
+        return reverse('product:category_filter', args=[self.slug, ])
+
+
 
     
 class Product(BaseModel):
