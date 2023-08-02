@@ -2,7 +2,7 @@ from django.db import models
 from core.models import BaseModel
 from django.urls import reverse
 
-class Category(BaseModel):
+class Category(models.Model):
     sub_category = models.ForeignKey('self', on_delete=models.CASCADE, related_name='scategory', null=True, blank=True)
     is_sub = models.BooleanField(default=False)
     name = models.CharField(max_length=100)
@@ -23,7 +23,7 @@ class Category(BaseModel):
 
 
     
-class Product(BaseModel):
+class Product(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     image = models.ImageField()
@@ -31,6 +31,9 @@ class Product(BaseModel):
     is_available = models.BooleanField(default=True)
     price = models.PositiveBigIntegerField()
     description = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
 
     class Meta:
         ordering = ('name',)
