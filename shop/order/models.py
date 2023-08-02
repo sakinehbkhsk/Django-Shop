@@ -31,12 +31,12 @@ class Order(BaseModel):
     def __str__(self):
         return f'{self.user} - {str(self.id)}'
 
-    def final_price(self):
-        total = sum(item.total_price() for item in self.items.all()) 
-        if self.offer :
-            discount_price = (self.offer/100)*total
-            return (total - discount_price)
-        return total     
+    def get_total_price(self):
+        total = sum(item.get_cost() for item in self.items.all())
+        if self.discount:
+            discount_price = (self.discount / 100) * total
+            return int(total - discount_price)
+        return total    
 
 
 class ProductOrder(BaseModel):
