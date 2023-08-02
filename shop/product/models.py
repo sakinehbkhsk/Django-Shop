@@ -1,6 +1,7 @@
 from django.db import models
+from core.models import BaseModel
 
-class Category(models.Model):
+class Category(BaseModel):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=200, unique=True)
 
@@ -9,7 +10,7 @@ class Category(models.Model):
     
 # selfrelation to category
     
-class Product(models.Model):
+class Product(BaseModel):
     name = models.CharField(max_length=200)
     image = models.ImageField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
