@@ -25,10 +25,12 @@ class Category(BaseModel):
     
 class Product(BaseModel):
     name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
     image = models.ImageField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ManyToManyField(Category, related_name='products')
     is_available = models.BooleanField(default=True)
     price = models.PositiveBigIntegerField()
+    description = models.TextField()
 
     def __str__(self) -> str:
         return self.name
