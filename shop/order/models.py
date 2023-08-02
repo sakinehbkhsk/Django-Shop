@@ -24,7 +24,10 @@ class Order(BaseModel):
     paid = models.BooleanField(default=False)
     discount = models.IntegerField(blank=True, null=True, default=None)
     created = models.DateTimeField(auto_now_add=True)
-    
+
+    class Meta:
+        ordering = ('paid', '-updated')
+
     def final_price(self):
         total = sum(item.total_price() for item in self.items.all()) 
         if self.offer :
