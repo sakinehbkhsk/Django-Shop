@@ -6,6 +6,12 @@ from .cart import Cart
 from .forms import CartAddForm, OfferApplyForm
 
 
+class CartView(View):
+    def get(self,request):
+        cart = Cart(request)
+        return render(request, 'order/cart.html', {'cart': cart})
+    
+
 class OrderDetailView(LoginRequiredMixin, View):
     form_class = OfferApplyForm
 
