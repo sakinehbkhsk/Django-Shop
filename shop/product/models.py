@@ -37,3 +37,7 @@ class Product(BaseModel):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('product:product_detail', args=[self.slug,])
+
