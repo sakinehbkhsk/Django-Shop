@@ -1,23 +1,10 @@
 from django.db import models
 from core.models import BaseModel
 from product.models import Product
-from account.models import User,Address
+from account.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 
-class Offer(models.Model):
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    price = models.PositiveBigIntegerField()
-    code = models.CharField(max_length=100, unique=True)
-    discount = models.SmallIntegerField()
-    is_available = models.BooleanField()
-    min_price = models.PositiveBigIntegerField()
-    max_price = models.PositiveBigIntegerField()
-    
-    # def discount_to_price(self):
-    #     if self.discount > 0:
-    #         total_price = self.price - (self.price * self.discount / 100)
-    #         return float(total_price)
-    #     return 0
+
 
 class Order(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -50,6 +37,18 @@ class OrderItem(BaseModel):
 
     def get_cost(self):
         return self.price * self.quantity
+
+
+class Offer(models.Model):
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    price = models.PositiveBigIntegerField()
+    code = models.CharField(max_length=100, unique=True)
+    discount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(90)])
+    active = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.code
     
 
 
