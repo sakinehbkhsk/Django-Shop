@@ -32,5 +32,8 @@ class Product(BaseModel):
     price = models.PositiveBigIntegerField()
     description = models.TextField()
 
+    class Meta:
+        ordering = ('name',)
+
     def __str__(self) -> str:
         return self.name
