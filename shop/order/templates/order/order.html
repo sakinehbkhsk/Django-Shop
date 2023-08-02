@@ -1,0 +1,23 @@
+
+
+{% block content %}
+{% load static %}
+<link  href="{% static 'assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet">
+<style>
+    body {
+        background-color: #F5CAEF;
+    }
+    h3, p, a, form {
+        margin-left: 20px; 
+    }
+</style>
+    <h3>Checkout</h3>
+    <p>Total: {{ order.get_total_price }}</p>
+    <a class="btn btn-primary">Pay</a>
+<br><br>
+    <form action="{% url 'order:apply_offer' order.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Apply">
+    </form>
+{% endblock %}

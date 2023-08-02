@@ -7,9 +7,9 @@
             <div class="row align-items-center">
                 <div class="col-lg-2 col-xl-2 col-md-6 col-6 col-custom">
                     <div class="header-logo d-flex align-items-center">
-                       
-                            <img class="img-full" src="{% static 'assets/images/logo/logo.png' %}" alt="Header Logo">
-                        
+
+                        <img class="img-full" src="{% static 'assets/images/logo/logo.png' %}" alt="Header Logo">
+
                     </div>
                 </div>
                 <div class="col-lg-8 d-none d-lg-flex justify-content-center col-custom">
@@ -19,30 +19,36 @@
                                 <a class="active" href="index.html">
                                     <span class="menu-text"> Home</span>
                                 </a>
-                               
+
                             </li>
                             <li>
                                 <a href="shop.html">
                                     <span class="menu-text">Shop</span>
                                     <i class="fa fa-angle-down"></i>
                                 </a>
-                                        <ul class="dropdown-submenu dropdown-hover">
-                                            <li><a href="whishlist.html">Product List</a></li>
-                                            <li><a href="cart.html">Cart Page</a></li>
-                                            <li><a href="checkout.html">Checkout Page</a></li>
-                                        </ul>
+                                <ul class="dropdown-submenu dropdown-hover">
+                                    <li><a href="{% url 'product:product' %}">Product List</a></li>
+                                    <li><a href="{% url 'order:cart' %}">Cart Page</a></li>
+                                    <li><a href="{% url 'order:apply_offer' order.id %}">Checkout Page</a></li>
+                                </ul>
                             </li>
                             <li>
+
                                 <a href="#">
+
                                     <span class="menu-text"> Pages</span>
                                     <i class="fa fa-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-submenu dropdown-hover">
+                                    {% if request.user.is_authenticated %}
+                                    <li><a href="{% url 'account:user_logout' %}">Logout</a></li>
+                                    {% else %}
                                     <li><a href="{% url 'account:user_register' %}">Register</a></li>
                                     <li><a href="{% url 'account:user_login' %}">Login</a></li>
-                                    <li><a href="{% url 'account:user_logout' %}">Logout</a></li>
+                                    {% endif %}
                                 </ul>
                             </li>
+
                             <li>
                                 <a href="about-us.html">
                                     <span class="menu-text"> About Us</span>
@@ -60,11 +66,13 @@
                     <div class="header-right-area main-nav">
                         <ul class="nav">
                             <li class="minicart-wrap">
-                                <a href="#" class="minicart-btn toolbar-btn">
+                                <a href="{% url 'order:cart' %}" class="minicart-btn toolbar-btn">
                                     <i class="fa fa-shopping-cart"></i>
-                                    <span class="cart-item_count">3</span>
+                                    <span class="cart-item_count">{{cart|length}}</span>
                                 </a>
-                                <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
+                            </li>
+
+                            <!-- <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
                                     <div class="single-cart-item">
                                         <div class="cart-img">
                                             <a href="cart.html"><img src="{% static 'assets/images/cart/1.jpg' %}" alt=""></a>
@@ -119,7 +127,7 @@
                                         <a class="btn flosun-button secondary-btn rounded-0" href="checkout.html">Checkout</a>
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
                             <li class="sidemenu-wrap">
                                 <a href="#"><i class="fa fa-search"></i> </a>
                                 <ul class="dropdown-sidemenu dropdown-hover-2 dropdown-search">
@@ -147,4 +155,4 @@
             </div>
         </div>
     </div>
-    <!-- Main Header Area End .. Enddddd navbar--> 
+    <!-- Main Header Area End .. Enddddd navbar-->
