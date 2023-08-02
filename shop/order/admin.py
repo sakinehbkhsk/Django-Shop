@@ -13,3 +13,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('paid',)
     inlines = (OrderItemInline,)
 
+
+
+admin.site.register(Offer)
+
