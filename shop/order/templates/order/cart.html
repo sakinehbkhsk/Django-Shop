@@ -1,5 +1,56 @@
 
 {% block content %}
+{% load static %}
+<link  href="{% static 'assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet">
+<style>
+     body {
+        background-color: #F5CAEF;
+    }
+    
+    table {
+        width: 100%;
+        margin-left: 20px;
+        background-color: #f5d6f1;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ccc;
+    }
+
+    th {
+        background-color: #A1E0F9;
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: #FFD7FA;
+    }
+
+    tr:hover {
+        background-color: #F1C2FF;
+    }
+
+    a {
+        margin-left: 20px;
+    }
+
+    .btn-primary {
+        background-color: #ED80FF;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-primary:hover {
+        background-color: #D044E1;
+    }
+    
+</style>
 <table class="table">
   <thead>
     <tr>
@@ -20,7 +71,7 @@
       <td>{{item.quantity}}</td>
       <td>{{item.price}}</td>
       <td>{{item.total_price}}</td>
-      <td><a href="{% url 'orders:cart_remove' item.product.id %}">remove</a></td>
+      <td><a href="{% url 'order:cart_remove' item.product.id %}">remove</a></td>
     </tr>
   {% endfor %}
   <tr>
@@ -29,5 +80,5 @@
   </tr>
   </tbody>
 </table>
-<a href="{% url 'orders:order_create' %}" class="btn btn-primary"  >CheckOut</a>
+<a href="{% url 'order:order_create' %}" class="btn btn-primary"  >CheckOut</a>
 {% endblock %}
