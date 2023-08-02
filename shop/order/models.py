@@ -28,6 +28,9 @@ class Order(BaseModel):
     class Meta:
         ordering = ('paid', '-updated')
 
+    def __str__(self):
+        return f'{self.user} - {str(self.id)}'
+
     def final_price(self):
         total = sum(item.total_price() for item in self.items.all()) 
         if self.offer :
