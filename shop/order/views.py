@@ -51,6 +51,7 @@ class OrderCreateView(LoginRequiredMixin, View):
         return redirect('order:order_detail', order.id)
 
 
+
 class OfferApplyView(LoginRequiredMixin,View):
     form_class = OfferApplyForm
 
