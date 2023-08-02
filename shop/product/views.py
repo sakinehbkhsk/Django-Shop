@@ -6,7 +6,7 @@ from order.forms import CartAddForm
 
 class ProductView(View):
     def get(self, request, category_slug=None):
-        products = Product.objects.filter(available=True)
+        products = Product.objects.filter(is_available=True)
         categories = Category.objects.filter(is_sub=False)
         if category_slug:
             category = Category.objects.get(slug=category_slug)
