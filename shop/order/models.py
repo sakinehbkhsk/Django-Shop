@@ -20,15 +20,10 @@ class Offer(models.Model):
     #     return 0
 
 class Order(BaseModel):
-    class OrderStatus(models.TextChoices):
-        Delivered = ('d', 'delivered')
-        Pending = ('p', 'Pending')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    status = models.CharField(max_length=1, choices=OrderStatus.choices, default=OrderStatus.Pending)
-    timestamp = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    address = models.ForeignKey(Address, on_delete=models.PROTECT)
-    offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
+    paid = models.BooleanField(default=False)
+    discount = models.IntegerField(blank=True, null=True, default=None)
+    created = models.DateTimeField(auto_now_add=True)
     
     def final_price(self):
         total = sum(item.total_price() for item in self.items.all()) 
