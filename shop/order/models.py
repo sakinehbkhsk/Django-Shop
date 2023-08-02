@@ -10,10 +10,10 @@ class Order(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     paid = models.BooleanField(default=False)
     discount = models.IntegerField(blank=True, null=True, default=None)
-    created = models.DateTimeField(auto_now_add=True)
+
 
     class Meta:
-        ordering = ('paid', '-updated')
+        ordering = ('paid',)
 
     def __str__(self):
         return f'{self.user} - {str(self.id)}'
