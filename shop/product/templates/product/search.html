@@ -1,0 +1,53 @@
+{% load static %}
+
+{% block content %}
+
+<link  href="{% static 'assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet">
+
+<h2>search results:</h2>
+    {% if products %}
+        <ul>
+            <section class="product" id="product">
+                <div class="container" id="container2">
+                    <div class="row" style="margin-top: 30px;">
+                        {% for product in products %}
+                            
+                                <div class="col-md-3 py-3 py-md-0">
+                                    <div class="card" style="height: 400px;">
+                                        <img src="{{ product.image.url }}" alt="">
+                                        <div class="card-body">
+                                            <h3 style="margin-top: 3px">{{ product.name }}</h3>
+                                            {% if product.discount %}
+                                                <p style="margin-top: 15px;">{{ product.discount_to_price }}$&nbsp &nbsp {{ product.discount }}% <br>
+                                                    <strike >{{ product.price }}$</strike>
+                                                    <span><a  class="fa-solid fa-cart-shopping"></a></span>
+                                                </p>
+                                            {% else %}
+                                                {% if product.is_available %}
+                                                
+                                                    <p>{{ product.price }}$ <span><a class="fa-solid fa-cart-shopping"></a></span></p>
+                                                {% else %}
+                                                    <p>{{ product.price }}$ <span><i>unavailable</i></span></p>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                                    </div><div class="row" style="margin-top: 30px;">
+                                {% endif %}
+                            
+                        {% endfor %}
+                    </div>
+                </div>  
+            </section>
+            
+                </div>
+            </div>  
+        </ul>
+    {% else %}
+        <p>No products found.</p>
+    {% endif %}
+
+
+{% endblock %}
