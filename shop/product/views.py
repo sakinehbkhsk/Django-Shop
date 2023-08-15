@@ -9,6 +9,7 @@ from .serializers import CategorySerializer, ProductSerializer
 from rest_framework import generics
 from django.views.generic import TemplateView
 from rest_framework.generics import ListAPIView
+from django.db.models import Sum
 
 
 #View class
@@ -85,13 +86,23 @@ class ProductDetailView(View):
 
 class SearchProduct(ListView):
     model = Product
-    template_name = 'search.html'
+    template_name = 'product/search.html'
     context_object_name = 'products'
 
     def get_queryset(self):
         search_products = self.request.GET.get('search_product')
-        top_selling = top_selling_products = Product.objects.annotate(total_quantity=Sum('product_order__number')).order_by('-total_quantity')[:10]
+        top_selling = top_selling_products = Product.objects.annotate(total_quantity=Sum('name')).order_by('-total_quantity')[:10]
         if search_products:
             products = Product.objects.filter(name__icontains = search_products)
             return products
 
+#APIView
+class SearchProductAPIView(APIView):
+    def get(self, request, format=None):
+        search_query = self.request.GET.get('search_product')
+        if search_query:
+            products = Product.objects.filter(name__icontains = search_query)
+            ser_data = ProductSerializer(products, many=True)
+            return Response(ser_data.data, status=status.HTTP_200_OK)
+
+        return Response({'error': 'search query not found.'}, status=status.HTTP_400_BAD_REQUEST)
