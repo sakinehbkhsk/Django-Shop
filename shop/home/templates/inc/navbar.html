@@ -132,8 +132,8 @@
                                 <a href="#"><i class="fa fa-search"></i> </a>
                                 <ul class="dropdown-sidemenu dropdown-hover-2 dropdown-search">
                                     <li>
-                                        <form action="#">
-                                            <input name="search" id="search" placeholder="Search" type="text">
+                                        <form action="{% url 'product:search_product' %}">
+                                            <input name="search_product" id="search" placeholder="Search" type="text">
                                             <button type="submit"><i class="fa fa-search"></i></button>
                                         </form>
                                     </li>
