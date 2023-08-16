@@ -19,15 +19,15 @@
                                             <h3 style="margin-top: 3px">{{ product.name }}</h3>
                                             {% if product.discount %}
                                                 <p style="margin-top: 15px;">{{ product.discount_to_price }}$&nbsp &nbsp {{ product.discount }}% <br>
-                                                    <strike >{{ product.price }}$</strike>
+                                                    <strike >{{ product.price }}hezar toman</strike>
                                                     <span><a  class="fa-solid fa-cart-shopping"></a></span>
                                                 </p>
                                             {% else %}
                                                 {% if product.is_available %}
                                                 
-                                                    <p>{{ product.price }}$ <span><a class="fa-solid fa-cart-shopping"></a></span></p>
+                                                    <p>{{ product.price }} hezar toman <span><a class="fa-solid fa-cart-shopping"></a></span></p>
                                                 {% else %}
-                                                    <p>{{ product.price }}$ <span><i>unavailable</i></span></p>
+                                                    <p>{{ product.price }} hezar toman <span><i>unavailable</i></span></p>
                                                 {% endif %}
                                             {% endif %}
                                         </div>
