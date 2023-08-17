@@ -109,14 +109,14 @@ class OrderCreateView(LoginRequiredMixin, View):
         return redirect('order:order_detail', order.id)
 
 # OrderApi
-class OrderDetailAPIView(APIView):
-    permission_classes = [IsAuthenticated]
-    form_class = OfferApplyForm
+# class OrderDetailAPIView(APIView):
+#     permission_classes = [IsAuthenticated]
+#     form_class = OfferApplyForm
 
-    def get(self, request, order_id):
-        order = get_object_or_404(Order, id=order_id)
-        serializer = OrderSerializer(order)
-        return render(request, 'order/order.html', {'order': serializer.data, 'form': self.form_class})
+#     def get(self, request, order_id):
+#         order = get_object_or_404(Order, id=order_id)
+#         serializer = OrderSerializer(order)
+#         return render(request, 'order/order.html', {'order': serializer.data, 'form': self.form_class})
 
 
 
