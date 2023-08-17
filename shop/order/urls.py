@@ -13,5 +13,6 @@ urlpatterns = [
     path('verify/', views.OrderVerifyView.as_view(), name='order_verify'),
 
     # path('api/cart/', CartAPIView.as_view(), name='api-cart'),
+    # path('api/cart/add/<int:product_id>/', CartAddAPIView.as_view(), name='api-cart-add'),
 
 ]

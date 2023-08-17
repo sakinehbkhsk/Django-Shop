@@ -23,15 +23,15 @@ class CartView(View):
     
 
 # CartAPI
-class CartAPIView(APIView):
-    def get(self, request):
-        cart = Cart(request)
-        cart_data = {
-            'cart_items': list(cart),
-            'cart_total_quantity': len(cart),
-            'cart_total_price': cart.get_total_price(),
-        }
-        return Response(cart_data, status=status.HTTP_200_OK)
+# class CartAPIView(APIView):
+#     def get(self, request):
+#         cart = Cart(request)
+#         cart_data = {
+#             'cart_items': list(cart),
+#             'cart_total_quantity': len(cart),
+#             'cart_total_price': cart.get_total_price(),
+#         }
+#         return Response(cart_data, status=status.HTTP_200_OK)
 
      
 
@@ -43,6 +43,24 @@ class CartAddView(View):
         if form.is_valid():
             cart.add(product, form.cleaned_data['quantity'])
         return redirect('order:cart')
+
+# CartAddView
+# class CartAddAPIView(APIView):
+#     def post(self, request, product_id):
+#         cart = Cart(request)
+#         product = get_object_or_404(Product, id=product_id)
+#         form = CartAddForm(request.data) 
+#         if form.is_valid():
+#             cart.add(product, form.cleaned_data['quantity'])
+#             cart_data = {
+#                 'cart_items': list(cart),
+#                 'cart_total_quantity': len(cart),
+#                 'cart_total_price': cart.get_total_price(),
+#             }
+#             return Response(cart_data, status=status.HTTP_200_OK)
+#         else:
+#             return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+
     
 
 class CartRemoveView(View):
