@@ -11,12 +11,28 @@ from django.conf import settings
 import requests
 import json
 from django.http import JsonResponse
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class CartView(View):
     def get(self,request):
         cart = Cart(request)
         return render(request, 'order/cart.html', {'cart': cart})
+    
+
+# CartAPI
+class CartAPIView(APIView):
+    def get(self, request):
+        cart = Cart(request)
+        cart_data = {
+            'cart_items': list(cart),
+            'cart_total_quantity': len(cart),
+            'cart_total_price': cart.get_total_price(),
+        }
+        return Response(cart_data, status=status.HTTP_200_OK)
+
      
 
 class CartAddView(View):
@@ -35,6 +51,9 @@ class CartRemoveView(View):
         product = get_object_or_404(Product, id=product_id)
         cart.remove(product)
         return redirect('order:cart')
+
+
+
     
 
 class OrderDetailView(LoginRequiredMixin, View):
