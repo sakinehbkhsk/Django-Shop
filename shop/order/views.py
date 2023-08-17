@@ -72,21 +72,19 @@ class CartRemoveView(View):
     
 
 # CartRemoveAPIView
-class CartRemoveAPIView(APIView):
-    def delete(self, request, product_id):
-        cart = Cart(request)
-        product = get_object_or_404(Product, id=product_id)
-        cart.remove(product)
+# class CartRemoveAPIView(APIView):
+#     def delete(self, request, product_id):
+#         cart = Cart(request)
+#         product = get_object_or_404(Product, id=product_id)
+#         cart.remove(product)
         
-        cart_data = {
-            'cart_items': list(cart),
-            'cart_total_quantity': len(cart),
-            'cart_total_price': cart.get_total_price(),
-        }
+#         cart_data = {
+#             'cart_items': list(cart),
+#             'cart_total_quantity': len(cart),
+#             'cart_total_price': cart.get_total_price(),
+#         }
 
-        return Response(cart_data, status=status.HTTP_200_OK)
-
-
+#         return Response(cart_data, status=status.HTTP_200_OK)
 
 
     
