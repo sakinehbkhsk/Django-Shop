@@ -14,5 +14,6 @@ urlpatterns = [
 
     # path('api/cart/', CartAPIView.as_view(), name='api-cart'),
     # path('api/cart/add/<int:product_id>/', CartAddAPIView.as_view(), name='api-cart-add'),
+    # path('api/cart/remove/<int:product_id>/', CartRemoveAPIView.as_view(), name='api-cart-remove'),
 
 ]
