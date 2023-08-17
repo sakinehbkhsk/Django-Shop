@@ -14,6 +14,8 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from .serializers import OrderSerializer
+from rest_framework.permissions import IsAuthenticated
 
 
 class CartView(View):
@@ -105,6 +107,18 @@ class OrderCreateView(LoginRequiredMixin, View):
             OrderItem.objects.create(order=order, product=item['product'], price=item['price'], quantity=item['quantity'])
         cart.clear()
         return redirect('order:order_detail', order.id)
+
+# OrderApi
+class OrderDetailAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    form_class = OfferApplyForm
+
+    def get(self, request, order_id):
+        order = get_object_or_404(Order, id=order_id)
+        serializer = OrderSerializer(order)
+        return render(request, 'order/order.html', {'order': serializer.data, 'form': self.form_class})
+
+
 
 
 
