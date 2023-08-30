@@ -16,6 +16,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import OrderSerializer
 from rest_framework.permissions import IsAuthenticated
+from django.http import HttpResponse
 
 
 class CartView(View):
@@ -151,7 +152,7 @@ ZP_API_REQUEST = f"https://{sandbox}.zarinpal.com/pg/rest/WebGate/PaymentRequest
 ZP_API_VERIFY = f"https://{sandbox}.zarinpal.com/pg/rest/WebGate/PaymentVerification.json"
 ZP_API_STARTPAY = f"https://{sandbox}.zarinpal.com/pg/StartPay/"
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  
-CallbackURL = 'http://127.0.0.1:8080/order/verify/'
+CallbackURL = 'http://127.0.0.1:8080/order/order_verify/'
 
 
 class OrderPayView(LoginRequiredMixin, View):
@@ -173,17 +174,22 @@ class OrderPayView(LoginRequiredMixin, View):
             response = requests.post(ZP_API_REQUEST, data=data, headers=headers, timeout=10)
 
             if response.status_code == 200:
-                response_data = response.json()
-                if response_data['Status'] == 100:
-                    return JsonResponse({'status': True, 'url': ZP_API_STARTPAY + str(response_data['Authority']), 'authority': response_data['Authority']})
-                else:
-                    return JsonResponse({'status': False, 'code': str(response_data['Status'])})
-            return JsonResponse(response_data)
-        
+                response = response.json()
+                if response["Status"] == 100:
+                    return redirect(ZP_API_STARTPAY + str(response["Authority"]))
+                elif response.get("errors"):
+                    e_code = response["errors"]["code"]
+                    e_message = response["errors"]["message"]
+                    return HttpResponse(
+                        f"Error code: {e_code}, Error Message: {e_message}"
+                    )
+            return HttpResponse(response.items())
+
         except requests.exceptions.Timeout:
-            return JsonResponse({'status': False, 'code': 'timeout'})
+            return {"status": False, "code": "timeout"}
         except requests.exceptions.ConnectionError:
-            return JsonResponse({'status': False, 'code': 'connection error'})
+            return {"status": False, "code": "connection error"}
+        
 
 
 class OrderVerifyView(LoginRequiredMixin, View):
