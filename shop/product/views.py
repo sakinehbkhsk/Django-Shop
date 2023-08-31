@@ -28,7 +28,7 @@ from django.core.paginator import Paginator
 class ProductView(ListView):
     template_name = 'product/product.html'
     context_object_name = 'products'
-    paginate_by = 2  # Adjust the number of products per page as needed
+    paginate_by = 2  
 
     def get_queryset(self):
         category_slug = self.kwargs.get('category_slug')
@@ -43,37 +43,6 @@ class ProductView(ListView):
         context['categories'] = Category.objects.filter(is_sub=False)
         return context
 
-    
-
-# APIView
-# class ProductAPIView(APIView):
-#     def get(self, request, category_slug=None):
-#         products = Product.objects.filter(is_available=True)
-#         if category_slug:
-#             products = products.objects.filter(category__slug=category_slug)
-#         ser_data = ProductSerializer(instance=products, many=True)
-#         return Response(ser_data.data, status=status.HTTP_200_OK)
-    
-
-#GenericAPIView
-# class ProductListView(ListAPIView):
-#     serializer_class = ProductSerializer
-
-#     def get_queryset(self):
-#         queryset = Product.objects.filter(is_available=True)
-#         category_slug = self.kwargs.get('category_slug')
-#         if category_slug:
-#             category = Category.objects.get(slug=category_slug)
-#             queryset = queryset.filter(category=category)
-#         return queryset
-
-# class ProductView(TemplateView):
-#     template_name = 'product/product.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['categories'] = Category.objects.filter(is_sub=False)
-#         return context
     
 
 class ProductDetailView(View):
@@ -96,13 +65,4 @@ class SearchProduct(ListView):
             products = Product.objects.filter(name__icontains = search_products)
             return products
 
-#APIView
-class SearchProductAPIView(APIView):
-    def get(self, request, format=None):
-        search_query = self.request.GET.get('search_product')
-        if search_query:
-            products = Product.objects.filter(name__icontains = search_query)
-            ser_data = ProductSerializer(products, many=True)
-            return Response(ser_data.data, status=status.HTTP_200_OK)
 
-        return Response({'error': 'search query not found.'}, status=status.HTTP_400_BAD_REQUEST)
