@@ -5,7 +5,7 @@ from order.forms import CartAddForm
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import CategorySerializer, ProductSerializer
+from .api.serializers import CategorySerializer, ProductSerializer
 from rest_framework import generics
 from django.views.generic import TemplateView
 from rest_framework.generics import ListAPIView
