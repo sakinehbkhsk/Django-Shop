@@ -48,6 +48,7 @@ class CartRemoveView(View):
 
 class OrderDetailView(LoginRequiredMixin, View):
     form_class = OfferApplyForm
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, order_id):
         order = get_object_or_404(Order, id=order_id)
