@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 app_name = 'order'
 urlpatterns = [
     path('create/', views.OrderCreateView.as_view(), name='order_create'),
@@ -12,8 +13,5 @@ urlpatterns = [
     path('pay/<int:order_id>/', views.OrderPayView.as_view(), name='order_pay'),
     path('verify/', views.OrderVerifyView.as_view(), name='order_verify'),
 
-    # path('api/cart/', CartAPIView.as_view(), name='api-cart'),
-    # path('api/cart/add/<int:product_id>/', CartAddAPIView.as_view(), name='api-cart-add'),
-    # path('api/cart/remove/<int:product_id>/', CartRemoveAPIView.as_view(), name='api-cart-remove'),
 
 ]
