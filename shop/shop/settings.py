@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-i(h2r^k*1$8+p5adot8ga(5o8d=pq5s7fn2@w+b4p+u9u9=ydg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1"]
 
 
 # Application definition
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # apps
+    'django_celery_beat',
     'account',
     'home',
     'core',
@@ -168,4 +170,14 @@ CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379"
 
 # BEAT SETTINGS
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+# SMTP SETTINGS
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "sakineh75pourbakhshali@gmail.com"
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+# DEFAULT_FROM_EMAIL = '<Noora_Toy_Shop>'
+DEFAULT_FROM_EMAIL = "sakineh75pourbakhshali@gmail.com"
 
