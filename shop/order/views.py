@@ -17,6 +17,7 @@ from rest_framework import status
 from .serializers import OrderSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.http import HttpResponse
+from order.tasks import send_order_status_email
 
 
 class CartView(View):
@@ -193,13 +194,13 @@ class OrderPayView(LoginRequiredMixin, View):
 
 
 class OrderVerifyView(LoginRequiredMixin, View):
-    def get(self, request, authority):
+    def get(self, request):
         order_id = request.session['order_pay']['order_id']
         order = Order.objects.get(id=int(order_id))
         data = {
         "MerchantID": settings.MERCHANT,
         "Amount": order.get_total_price(),
-        "Authority": authority,
+        "Authority": request.GET["Authority"],
         }
         data = json.dumps(data)
         # set content length by data
@@ -208,8 +209,37 @@ class OrderVerifyView(LoginRequiredMixin, View):
 
         if response.status_code == 200:
             response = response.json()
-            if response['Status'] == 100:
-                return JsonResponse({'status': True, 'RefID': response['RefID']})
+            if response["Status"] == 100 or response["Status"] == 101:
+                order.status = 2
+                order.transaction_id = response["RefID"]
+                order.save()
+                cart = order.customer.cart
+                if cart.coupon:
+                    coupon = cart.coupon
+                    coupon.is_active = False
+                    coupon.save()
+                    cart.coupon = None
+                    cart.save()
+
+                for item in cart.cart_items.all():
+                    product = item.product
+                    product.quantity -= item.quantity
+                    if product.quantity == 0:
+                        product.is_active = False
+                    product.save()
+                    item.delete()
+
+                if order.user.email:
+                    mail = order.user.email
+                    message = f"Transaction success.RefID:  {str(response['RefID'])}"
+                    mail_subject = "Order Confirmed Successfuly"
+                    send_order_status_email.delay(mail, message, mail_subject)
+
+                return HttpResponse(
+                    f"Transaction success.RefID:  {str(response['RefID'])}, Status: {response['Status']}, order ID: {order_id}"
+                )
             else:
-                return JsonResponse({'status': False, 'code': str(response['Status'])})
+                order.status = 3
+                order.save()
+                return HttpResponse("Transaction failed, order ID:" + str(order_id))
         return response
