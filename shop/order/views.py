@@ -11,10 +11,9 @@ from django.conf import settings
 import requests
 import json
 from django.http import JsonResponse
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import OrderSerializer
+from .api.serializers import OrderSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.http import HttpResponse
 from order.tasks import send_order_status_email
@@ -26,18 +25,6 @@ class CartView(View):
         return render(request, 'order/cart.html', {'cart': cart})
     
 
-# CartAPI
-# class CartAPIView(APIView):
-#     def get(self, request):
-#         cart = Cart(request)
-#         cart_data = {
-#             'cart_items': list(cart),
-#             'cart_total_quantity': len(cart),
-#             'cart_total_price': cart.get_total_price(),
-#         }
-#         return Response(cart_data, status=status.HTTP_200_OK)
-
-     
 
 class CartAddView(View):
     def post(self, request, product_id):
@@ -48,23 +35,6 @@ class CartAddView(View):
             cart.add(product, form.cleaned_data['quantity'])
         return redirect('order:cart')
 
-# CartAddView
-# class CartAddAPIView(APIView):
-#     def post(self, request, product_id):
-#         cart = Cart(request)
-#         product = get_object_or_404(Product, id=product_id)
-#         form = CartAddForm(request.data) 
-#         if form.is_valid():
-#             cart.add(product, form.cleaned_data['quantity'])
-#             cart_data = {
-#                 'cart_items': list(cart),
-#                 'cart_total_quantity': len(cart),
-#                 'cart_total_price': cart.get_total_price(),
-#             }
-#             return Response(cart_data, status=status.HTTP_200_OK)
-#         else:
-#             return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
-
     
 
 class CartRemoveView(View):
@@ -73,25 +43,8 @@ class CartRemoveView(View):
         product = get_object_or_404(Product, id=product_id)
         cart.remove(product)
         return redirect('order:cart')
-    
-
-# CartRemoveAPIView
-# class CartRemoveAPIView(APIView):
-#     def delete(self, request, product_id):
-#         cart = Cart(request)
-#         product = get_object_or_404(Product, id=product_id)
-#         cart.remove(product)
-        
-#         cart_data = {
-#             'cart_items': list(cart),
-#             'cart_total_quantity': len(cart),
-#             'cart_total_price': cart.get_total_price(),
-#         }
-
-#         return Response(cart_data, status=status.HTTP_200_OK)
 
 
-    
 
 class OrderDetailView(LoginRequiredMixin, View):
     form_class = OfferApplyForm
@@ -109,18 +62,6 @@ class OrderCreateView(LoginRequiredMixin, View):
             OrderItem.objects.create(order=order, product=item['product'], price=item['price'], quantity=item['quantity'])
         cart.clear()
         return redirect('order:order_detail', order.id)
-
-# OrderApi
-# class OrderDetailAPIView(APIView):
-#     permission_classes = [IsAuthenticated]
-#     form_class = OfferApplyForm
-
-#     def get(self, request, order_id):
-#         order = get_object_or_404(Order, id=order_id)
-#         serializer = OrderSerializer(order)
-#         return render(request, 'order/order.html', {'order': serializer.data, 'form': self.form_class})
-
-
 
 
 
