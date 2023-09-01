@@ -2,22 +2,39 @@
 
 {% block content %}
 {% load static %}
+
+<link  href="{% static 'assets/css/plugins/swiper-bundle.min.css' %}" rel="stylesheet">
+<link  href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 <link  href="{% static 'assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet">
-<style>
-    body {
-        background-color: #F5CAEF;
-    }
-    h3, p, a, form {
-        margin-left: 20px; 
-    }
-</style>
-    <h3>Checkout</h3>
-    <p>Total: {{ order.get_total_price }}</p>
-    <a class="btn btn-primary">Pay</a>
-<br><br>
-    <form action="{% url 'order:apply_offer' order.id %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Apply">
-    </form>
+<div class="intro4-slider-wrap section-3">
+    <div class="intro11-slider swiper-container">
+        <div class="swiper-wrapper">
+            <div class="intro11-section swiper-slide slide-2 slide-bg-1 bg-position">
+                <!-- Intro Content Start -->
+                <div class="intro11-content-2 text-center">
+                  <h1 class="different-title">Final pay</h1>
+                </div>
+                <!-- Intro Content End -->
+                <div style="color: rgb(219, 94, 219);">
+                    <h3 style="color: rgb(219, 94, 219);">Checkout</h3>
+                    <p>Total: {{ order.get_total_price }}</p>
+                    <br>
+                    <input type="submit" value="Do you have a discount code?">
+                    <br><br>
+                    <form action="{% url 'order:apply_offer' order.id %}" method="post" >
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" value="Apply" style="color: rgb(219, 94, 219);">
+                    </form>
+                    <br><br>
+                    <a class="btn btn-primary" href="{% url 'order:order_pay' order.id %}" > Final Pay</a>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+    
+    
 {% endblock %}

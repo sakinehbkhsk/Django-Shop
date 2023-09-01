@@ -25,6 +25,9 @@ urlpatterns = [
     path('account/', include('account.urls', namespace='account')),
     path('product/', include('product.urls', namespace='product')),
     path('order/', include('order.urls', namespace='order')),
+    path('order_api/', include('order.api.urls', namespace='order_api')),
+    path('product_api/', include('product.api.urls', namespace='product_api')),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

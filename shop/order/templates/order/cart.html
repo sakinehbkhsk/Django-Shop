@@ -1,17 +1,22 @@
 
 {% block content %}
 {% load static %}
+
+<link  href="{% static 'assets/css/plugins/swiper-bundle.min.css' %}" rel="stylesheet">
+<link  href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 <link  href="{% static 'assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet">
+
+
 <style>
      body {
         background-color: #F5CAEF;
     }
     
     table {
-        width: 100%;
-        margin-left: 20px;
-        background-color: #f5d6f1;
-        border-collapse: collapse;
+      width: 10px;
+      margin-left: 20px;
+      background-color: #f5d6f1;
+      border-collapse: collapse;
     }
 
     th, td {
@@ -81,4 +86,21 @@
   </tbody>
 </table>
 <a href="{% url 'order:order_create' %}" class="btn btn-primary"  >CheckOut</a>
+
+<div class="intro4-slider-wrap section-1">
+    <div class="intro11-slider swiper-container">
+        <div class="swiper-wrapper">
+            <div class="intro11-section swiper-slide slide-4 slide-bg-1 bg-position">
+                <!-- Intro Content Start -->
+                <div class="intro11-content-2 text-center">
+                  <h1 class="different-title">CheckOut</h1>
+                </div>
+                <!-- Intro Content End -->
+                
+
+            </div>
+        </div>
+    
+    </div>
+</div>
 {% endblock %}

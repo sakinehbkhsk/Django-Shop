@@ -6,3 +6,4 @@ class CartAddForm(forms.Form):
 
 class OfferApplyForm(forms.Form):
     code = forms.CharField()
+    
