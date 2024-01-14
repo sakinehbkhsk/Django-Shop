@@ -1,0 +1,83 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en">
+
+
+<!-- Mirrored from htmldemo.net/flosun/flosun/index-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Dec 2022 05:03:14 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>FloSun - Flower Shop</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/favicon.ico' %}">
+    
+    <!-- CSS
+	============================================ -->
+    <!-- Bootstrap CSS -->
+    <link  href="{% static 'assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link  href="{% static 'assets/css/vendor/font.awesome.min.css' %}" rel="stylesheet">
+    <!-- Linear Icons CSS -->
+    <link  href="{% static 'assets/css/vendor/linearicons.min.css' %}" rel="stylesheet">
+    <!-- Swiper CSS -->
+    <link  href="{% static 'assets/css/plugins/swiper-bundle.min.css' %}" rel="stylesheet">
+    <!-- Animation CSS -->
+    <link  href="{% static 'assets/css/plugins/animate.min.css' %}" rel="stylesheet">
+    <!-- Jquery ui CSS -->
+    <link  href="{% static 'assets/css/plugins/jquery-ui.min.css' %}" rel="stylesheet">
+    <!-- Nice Select CSS -->
+    <link  href="{% static 'assets/css/plugins/nice-select.min.css' %}" rel="stylesheet">
+    <!-- Magnific Popup -->
+    <link  href="{% static 'assets/css/plugins/magnific-popup.css' %}" rel="stylesheet">
+
+    <!-- Main Style CSS -->
+    <link  href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    {% include 'inc/navbar.html' %}
+    <div class="base">
+    {% include 'inc/messages.html' %}
+    {% include 'inc/about.html' %}
+    {% include 'inc/slider.html' %}
+    {% include 'inc/collection.html' %}
+    {% include 'inc/gallery.html' %}
+    {% include 'inc/footer.html' %}
+    {% block content %} {% endblock %}
+    </div>
+    
+
+    <!-- JS
+============================================ -->
+    <!-- jQuery JS -->
+    <script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
+    <!-- jQuery Migrate JS -->
+    <script src="{% static 'assets/js/vendor/jquery-migrate-3.3.2.min.js' %}"></script>
+    <!-- Modernizer JS -->
+    <script src="{% static 'assets/js/vendor/modernizr-3.7.1.min.js' %}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+    <!-- Swiper Slider JS -->
+    <script src="{% static 'assets/js/plugins/swiper-bundle.min.js' %}"></script>
+    <!-- nice select JS -->
+    <script src="{% static 'assets/js/plugins/nice-select.min.js' %}"></script>
+    <!-- Ajaxchimpt js -->
+    <script src="{% static 'assets/js/plugins/jquery.ajaxchimp.min.js' %}"></script>
+    <!-- Jquery Ui js -->
+    <script src="{% static 'assets/js/plugins/jquery-ui.min.js' %}"></script>
+    <!-- Jquery Countdown js -->
+    <script src="{% static 'assets/js/plugins/jquery.countdown.min.js' %}"></script>
+    <!-- jquery magnific popup js -->
+    <script src="{% static 'assets/js/plugins/jquery.magnific-popup.min.js' %}"></script>
+    <!-- Main JS -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</body>
+<!-- Mirrored from htmldemo.net/flosun/flosun/index-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Dec 2022 05:03:17 GMT -->
+</html>

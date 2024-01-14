@@ -1,0 +1,30 @@
+
+{% load static %}
+
+{% block content %}
+
+ 
+<link  href="{% static 'assets/css/vendor/bootstrap.min.css' %}" rel="stylesheet">
+  <style>
+     body{
+        background-color: #F5CAEF;
+      
+     } 
+    h2, p, small, form, img {
+        margin-left: 20px; 
+        color: #5e095b;
+    }
+  </style>
+    <h2>{{product.name}}</h2>
+    <small>{{product.created}}</small><br>
+    <p>{{product.price}} Toman</p>
+    <img src="{{product.image.url}}" style="width: 300px">
+    <p>{{product.description}}</p><br><br>
+
+    <form action="{% url 'order:cart_add' product.id %}" method="post">
+      {% csrf_token %}
+      {{form }}
+      <input type="submit" value="add to cart " style="color: #5e095b;">
+    </form>
+    
+  {% endblock %}
